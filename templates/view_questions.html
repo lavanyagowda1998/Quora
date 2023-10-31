@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Questions</h1>
+  <ul>
+    {% for question in questions %}
+      <li>{{ question.text }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'post_question' %}">Post a Question</a>
+{% endblock %}
