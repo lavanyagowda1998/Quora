@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <h1>Questions and Answers</h1>
+    
+    <!-- Form for Posting a Question -->
+    <form method="post" action="{% url 'post_question' %}">
+        {% csrf_token %}
+        <label for="question">Post Your Question:</label>
+        <input type="text" id="question" name="question" required>
+        <button type="submit">Submit Question</button>
+    </form>
+    
+    <!-- List of Questions -->
+    <ul>
+        {% for question in questions %}
+        <li>
+            {{ question.title }}
+            <p>{{ question.content }}</p>
+            
+            <!-- Form for Posting an Answer -->
+            <form method="post" action="{% url 'post_answer' question.id %}">
+                {% csrf_token %}
+                <label for="answer">Your Answer:</label>
+                <input type="text" id="answer" name="answer" required>
+                <button type="submit">Your Answer</button>
+            </form>
+            
+            <!-- List of Answers -->
+            <ul>
+                {% for answer in question.answer_set.all %}
+                <li>
+                  {{ answer.content }}
+                  <p><span class="like-count">{{ answer.like_count }}</span></p>
+                  <form method="post" action="{% url 'like_answer' answer.id %}">
+                      {% csrf_token %}
+                      <button type="submit">Like</button>
+                  </form>
+              </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Logout Button -->
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

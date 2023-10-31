@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-
+{% extends "login.html" %}
 {% block content %}
   <h1>Post a Question</h1>
   <form method="post">
@@ -7,5 +6,5 @@
     {{ form.as_p }}
     <button type="submit">Submit</button>
   </form>
-  <a href="{% url 'view_questions' %}">Back to Questions</a>
+  <a href="{% url 'home' %}">Back to Home</a>
 {% endblock %}
